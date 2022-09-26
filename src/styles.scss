@@ -1,1 +1,133 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+  background: linear-gradient(70deg, rgb(24, 144, 255), rgb(102, 102, 102));
+  background-attachment: fixed;
+  font-family: 'Roboto', sans-serif;
+}
+
+.page{
+    width: 100%;
+    height: 100%;
+}
+.content {
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+}
+header {
+  padding: 10px;
+  background: black;
+  color: white;
+  text-align: center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.header-wrapper{
+  display: flex;
+  min-width: 500px;
+  justify-content: space-between;
+}
+.content-row {
+  display: flex;
+}
+main {
+  background: #eee;
+  padding: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+footer {
+  text-align: center;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+}
+.card {
+  margin: 20px;
+  border-radius: 15px;
+  background: white;
+  padding: 20px;
+  box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+  transition: 0.3s;
+  width: 100%;
+}
+.big-card {
+  margin: 20px;
+  border-radius: 15px;
+  background: white;
+  padding: 20px;
+  box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+  transition: 0.3s;
+  width: 100%;
+}
+.currency-field{
+  min-width: 250px;
+  position: fixed; 
+  bottom: 50%;
+  margin: 20px;
+  transform: translate(90%, 50%);
+  right: 51%;
+}
+.button {
+  border: none;
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+}
+.button:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.button:hover {
+  background-color: #e6e6e6; /* Green */
+  color: rgb(66, 66, 66);
+}
+.card, big-card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.listItem{
+  margin: 20px;
+  display: flex;
+  max-width: 170px;
+}
+
+.middle-item{
+  margin: 0 auto 0 15px;
+}
+
+input[type=number], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.actual-curse{
+  display: flex;
+  flex-direction: column;
+}
