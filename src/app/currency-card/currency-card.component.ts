@@ -1,75 +1,63 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ICard } from '../app.component';
+import { FormControl, FormGroup } from '@angular/forms';
+import { CardServiceMethods } from './currency-card.service';
 
 @Component({
   selector: 'app-currency-card',
-  template: `
-    <div>
-      <input placeholder="From" type="number" #firstCurrencyInput  (input)="firstInputHandler(firstCurrencyInput.value)" [value]="firstValue"/>
-      <select #firstCurrencyChoose (input)="firstSelectHandler(firstCurrencyChoose.value)" >
-        <option selected="selected" value="0">USD</option>
-        <option value="1">UAH</option>
-        <option value="2">EUR</option>
-        <option value="3">PLN</option>
-      </select>
-      <h1 style="text-align:center">👇👇👇</h1>
-      <input placeholder="To" type="number" #secondCurrencyInput (input)="secondInputHandler(secondCurrencyInput.value)" [value]="secondValue"/>
-      <select #secondCurrencyChoose (input)="secondSelectHandler(secondCurrencyChoose.value)" >
-        <option value="0">USD</option>
-        <option selected="selected" value="1">UAH</option>
-        <option value="2">EUR</option>
-        <option value="3">PLN</option>
-      </select>
-    </div>
-  `,
+  templateUrl: './currency-card.component.html',
 })
-
 export class CurrencyCardComponent implements OnInit {
-  @Input() currenciesCoefs : Array<number>
+  @Input() currenciesCoefs: Array<number>;
 
-  firstValue: number
-  secondValue: number 
-  firstSelect: number = 0
-  secondSelect: number = 1
-  coefficient: number 
+  constructor(public cardServiceMethods: CardServiceMethods) {}
 
-  ngOnInit(){
-    this.firstSelectHandler(this.firstSelect)
-    this.secondSelectHandler(this.secondSelect)
-  }
+  firstSelectCoefficient: number;
+  secondSelectCoefficient: number;
+  coefficient: number;
+  formGroup: FormGroup;
 
-  firstInputHandler(value: any){
-    this.firstValue = value
-    this.secondValue = Math.round(value/this.coefficient*100)/100 
-  }
-  
-  firstSelectHandler(value: any){
-    this.firstSelect = this.currenciesCoefs[value]
-    this.setCoefficient(this.firstSelect,this.secondSelect)
-    this.firstInputHandler(this.firstValue)
-  }
-  
-  secondInputHandler(value: any){
-    this.secondValue = value
-    this.firstValue = Math.round(value*this.coefficient*100)/100
-  }
-  
-  secondSelectHandler(value: any){
-    this.secondSelect = this.currenciesCoefs[value]
-    this.setCoefficient(this.firstSelect,this.secondSelect)
-    this.secondInputHandler(this.secondValue)
-    
+  ngOnInit() {
+    this.formGroup = new FormGroup({
+      firstValueInput: new FormControl(),
+      secondValueInput: new FormControl(0),
+      firstCurrencySelect: new FormControl(0),
+      secondCurrencySelect: new FormControl(1),
+    });
+    this.formGroup.valueChanges.subscribe((e) => {});
+    this.firstSelectCoefficient =
+      this.currenciesCoefs[this.formGroup.value.firstCurrencySelect];
+    this.secondSelectCoefficient =
+      this.currenciesCoefs[this.formGroup.value.secondCurrencySelect];
+    this.coefficient = this.cardServiceMethods.setCoefficient(
+      this.firstSelectCoefficient,
+      this.secondSelectCoefficient,
+    );
   }
 
-  setCoefficient(firstCoef: number, secondCoef: number){
-    this.coefficient = firstCoef / secondCoef
-    // this.firstInputHandler(this.firstValue)
-    // this.secondInputHandler(this.secondValue)
+  firstSelectHandler(value: number) {
+    this.firstSelectCoefficient = this.currenciesCoefs[value];
+    this.coefficient = this.cardServiceMethods.setCoefficient(
+      this.firstSelectCoefficient,
+      this.secondSelectCoefficient
+    );
+    this.cardServiceMethods.firstInputHandler(this.formGroup, this.coefficient);
   }
 
-  swapCurrecries(){
-    const middleValue = this.secondInputHandler
-    this.secondInputHandler = this.firstInputHandler
-    this.firstInputHandler = middleValue
+  secondSelectHandler(value: number) {
+    this.secondSelectCoefficient = this.currenciesCoefs[value];
+    this.coefficient = this.cardServiceMethods.setCoefficient(
+      this.firstSelectCoefficient,
+      this.secondSelectCoefficient
+    );
+    this.cardServiceMethods.firstInputHandler(this.formGroup, this.coefficient);
+  }
+
+  swapCurrencies() {
+    this.firstSelectHandler(this.formGroup.value.secondCurrencySelect);
+    this.secondSelectHandler(this.formGroup.value.firstCurrencySelect);
+
+    const middleValue = this.formGroup.value.firstCurrencySelect;
+    this.formGroup.get('firstCurrencySelect')?.setValue(this.formGroup.value.secondCurrencySelect);
+    this.formGroup.get('secondCurrencySelect')?.setValue(middleValue);
   }
 }

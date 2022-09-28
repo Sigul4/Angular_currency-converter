@@ -1,31 +1,36 @@
 <header>
-    <div class="header-wrapper">
-        <h1>HEADER - HEADER</h1>
-        <div class="actual-curse">
-            <span>USD to UAH : {{allCurs.UAH.toFixed(2)}}</span>
-            <span>EUR to UAH : {{(allCurs.UAH/allCurs.EUR).toFixed(2)}}</span>
-        </div>
+  <div class="header-wrapper">
+    <h1>HEADER - HEADER</h1>
+    <div class="actual-curse">
+      <span>USD to UAH : {{ USD }}</span>
+      <span>EUR to UAH : {{ EUR }}</span>
     </div>
+  </div>
 </header>
-    <div class="content">
-        <div class="big-card">
-            <div  *ngIf="res">
-                <app-list 
-                *ngFor="let rate of res; index as i"
-                [card]="rate"
-                [index]="i + 1"
-                >
-                </app-list>
-            </div>
-            
-        <div class="currency-field">
-            <div class="card">
-                <app-currency-card
-                [currenciesCoefs]="[allCurs.USD, allCurs.UAH, allCurs.EUR, allCurs.PLN]"
-                >
-                </app-currency-card>
-            </div>
-        </div>
-        </div>
+<div class="content">
+  <div class="big-card">
+    <div *ngIf="allCurs">
+      <app-list
+        *ngFor="let rate of Currencies; index as i"
+        [card]="rate"
+        [index]="i + 1"
+      >
+      </app-list>
     </div>
+
+    <div class="currency-field">
+      <div class="card">
+        <app-currency-card
+          [currenciesCoefs]="[
+            allCurs.USD,
+            allCurs.UAH,
+            allCurs.EUR,
+            allCurs.PLN
+          ]"
+        >
+        </app-currency-card>
+      </div>
+    </div>
+  </div>
+</div>
 <footer></footer>

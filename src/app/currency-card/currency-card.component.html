@@ -1,1 +1,32 @@
-<p>currecy-card works!</p>
+<form class="form" [formGroup]="formGroup">
+  <app-form-currency-input
+    #firstCurrencyInput
+    formControlName="firstValueInput"
+    type="number"
+    (input)="cardServiceMethods.firstInputHandler(formGroup, coefficient);"
+  >
+  </app-form-currency-input>
+  <app-form-currency-select
+    #firstCurrencyChoose
+    formControlName="firstCurrencySelect"
+    (input)="firstSelectHandler(firstCurrencyChoose.value)"
+  >
+  </app-form-currency-select>
+  <div style="display: flex; justify-content: center">
+    <h1>Swap 👉</h1>
+    <button class="reverseButton" (click)="swapCurrencies()"></button>
+  </div>
+  <app-form-currency-input
+    placeholder="To"
+    formControlName="secondValueInput"
+    type="number"
+    (input)="cardServiceMethods.secondInputHandler(formGroup, coefficient)"
+  >
+  </app-form-currency-input>
+  <app-form-currency-select
+    #secondCurrencyChoose
+    formControlName="secondCurrencySelect"
+    (input)="secondSelectHandler(secondCurrencyChoose.value)"
+  >
+  </app-form-currency-select>
+</form>
